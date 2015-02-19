@@ -42,7 +42,7 @@ PACKAGES =+ "libclc-mx6 libclc-mx6-dev libclc-mx6-dbg \
 	libvsc-mx6 \
 	libwayland-viv-mx6 libwayland-viv-mx6-dev libwayland-viv-mx6-dbg \
 	libgc-wayland-protocol-mx6 libgc-wayland-protocol-mx6-dev libgc-wayland-protocol-mx6-dbg \
-	libwayland-egl-mx6-dev \
+	libwayland-egl-mx6 libwayland-egl-mx6-dev \
 	imx-gpu-viv-g2d imx-gpu-viv-g2d-dev imx-gpu-viv-g2d-dbg \
 	imx-gpu-viv-tools imx-gpu-viv-tools-dbg\
 	imx-gpu-viv-tools-apitrace imx-gpu-viv-tools-apitrace-dbg\
@@ -150,6 +150,8 @@ do_install () {
         install -m 0644 ${S}/gpu-core/usr/lib/pkgconfig/wayland-egl.pc ${D}${libdir}/pkgconfig/wayland-egl.pc
         install -m 0644 ${S}/gpu-core/usr/lib/pkgconfig/wayland-viv.pc ${D}${libdir}/pkgconfig/wayland-viv.pc
         mv ${D}${libdir}/libGAL_egl.${backend}.so ${D}${libdir}/libGAL_egl.so
+        # make (at least) kde's extra-cmake-modules happy
+        ln -sf libEGL.so ${D}${libdir}/libwayland-egl.so
     else
         install -m 0644 ${S}/gpu-core/usr/lib/pkgconfig/glesv1_cm.pc ${D}${libdir}/pkgconfig/glesv1_cm.pc
         install -m 0644 ${S}/gpu-core/usr/lib/pkgconfig/glesv2.pc ${D}${libdir}/pkgconfig/glesv2.pc
@@ -323,6 +325,7 @@ FILES_libgc-wayland-protocol-mx6 = "${libdir}/libgc_wayland_protocol${REALSOLIBS
 FILES_libgc-wayland-protocol-mx6-dev = "${libdir}/libgc_wayland_protocol${SOLIBSDEV} ${libdir}/pkgconfig/gc_wayland_protocol.pc"
 FILES_libgc-wayland-protocol-mx6-dbg = "${libdir}/libgc_wayland_protocol${SOLIBS}"
 
+FILES_libwayland-egl-mx6 = "${libdir}/libwayland-egl.so"
 FILES_libwayland-egl-mx6-dev = "${libdir}/pkgconfig/wayland-egl.pc"
 
 FILES_libvivante-dfb-mx6 += "${sysconfdir}/directfbrc"
