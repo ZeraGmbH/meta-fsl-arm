@@ -1,0 +1,2 @@
+PACKAGECONFIG_GL_mx6 = "gles2"
+
